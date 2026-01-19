@@ -2,7 +2,7 @@ import { useState } from 'react';
 import Button from '../components/ui/Button';
 import Input from '../components/ui/Input';
 
-const Login = ({ onNavigateToRegister, showSnackbar }) => {
+const Login = ({ onNavigateToRegister, showSnackbar, onLoginSuccess }) => {
   const [formData, setFormData] = useState({
     email: '',
     password: ''
@@ -36,8 +36,12 @@ const Login = ({ onNavigateToRegister, showSnackbar }) => {
 
       if (response.ok) {
         localStorage.setItem('token', data.token);
+        localStorage.setItem('role', data.role);
+        localStorage.setItem('first_name', data.first_name || data.fiest_name);
+        localStorage.setItem('last_name', data.last_name);
+        
         showSnackbar(data.message || 'Logowanie udane', 'success');
-        // Start session / Redirect logic would go here
+        if (onLoginSuccess) onLoginSuccess();
       } else {
         showSnackbar(data.message || data.error || 'Nieprawidłowe dane logowania', 'error');
       }
