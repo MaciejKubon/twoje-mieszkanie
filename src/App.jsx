@@ -75,7 +75,7 @@ function App() {
       </div>
 
       {isLoggedIn ? (
-        <Dashboard onLogout={handleLogout} />
+        <Dashboard onLogout={handleLogout} showSnackbar={showSnackbar} />
       ) : (
         <>
           {currentPage === 'login' ? (
