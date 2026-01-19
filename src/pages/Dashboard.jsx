@@ -1,7 +1,9 @@
 import { useState } from 'react';
 import Sidebar from '../components/layout/Sidebar';
+import Overview from './dashboard/Overview';
+import MyObjects from './dashboard/MyObjects';
 
-const Dashboard = ({ onLogout }) => {
+const Dashboard = ({ onLogout, showSnackbar }) => {
   const [activePage, setActivePage] = useState('dashboard');
 
   const handleNavigate = (pageId) => {
@@ -18,20 +20,8 @@ const Dashboard = ({ onLogout }) => {
       
       <main className="dashboard-content">
         <div className="content-container glass-panel">
-          {activePage === 'dashboard' && (
-            <div>
-              <h1 className="page-header">Witaj w panelu głównym</h1>
-              <p className="page-text">Wybierz opcję z menu po lewej stronie.</p>
-            </div>
-          )}
-          
-          {activePage === 'obiekty' && (
-            <div>
-              <h1 className="page-header">Moje Obiekty</h1>
-              <p className="page-text">Tutaj pojawi się lista Twoich nieruchomości.</p>
-              {/* Placeholder for future objects list */}
-            </div>
-          )}
+          {activePage === 'dashboard' && <Overview />}
+          {activePage === 'obiekty' && <MyObjects showSnackbar={showSnackbar} />}
         </div>
       </main>
     </div>
