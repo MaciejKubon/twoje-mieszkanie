@@ -1,8 +1,8 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Button from '../ui/Button';
 import Input from '../ui/Input';
 
-const AddObjectForm = ({ onSubmit, onCancel, isLoading, errors = {} }) => {
+const AddObjectForm = ({ onSubmit, onCancel, isLoading, errors = {}, initialData = null }) => {
   const [formData, setFormData] = useState({
     name: '',
     type_of_building: 'apartment',
@@ -15,6 +15,34 @@ const AddObjectForm = ({ onSubmit, onCancel, isLoading, errors = {} }) => {
     apartment_number: ''
   });
 
+  useEffect(() => {
+    if (initialData) {
+      setFormData({
+        name: initialData.name || '',
+        type_of_building: initialData.type_of_building || 'apartment',
+        country: initialData.country || '',
+        voivodeship: initialData.voivodeship || '',
+        city: initialData.city || '',
+        zip_code: initialData.zip_code || '',
+        street: initialData.street || '',
+        house_number: String(initialData.house_number || ''),
+        apartment_number: String(initialData.apartment_number || '')
+      });
+    } else {
+       setFormData({
+        name: '',
+        type_of_building: 'apartment',
+        country: '',
+        voivodeship: '',
+        city: '',
+        zip_code: '',
+        street: '',
+        house_number: '',
+        apartment_number: ''
+      });
+    }
+  }, [initialData]);
+
   const handleChange = (e) => {
     const { id, value } = e.target;
     setFormData(prev => ({
@@ -25,7 +53,12 @@ const AddObjectForm = ({ onSubmit, onCancel, isLoading, errors = {} }) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    onSubmit(formData);
+    const submissionData = {
+      ...formData,
+      house_number: String(formData.house_number),
+      apartment_number: String(formData.apartment_number || '')
+    };
+    onSubmit(submissionData);
   };
 
   return (
@@ -131,7 +164,7 @@ const AddObjectForm = ({ onSubmit, onCancel, isLoading, errors = {} }) => {
           Anuluj
         </Button>
         <Button type="submit" variant="primary" disabled={isLoading}>
-          {isLoading ? 'Dodawanie...' : 'Dodaj obiekt'}
+          {isLoading ? (initialData ? 'Zapisywanie...' : 'Dodawanie...') : (initialData ? 'Zapisz zmiany' : 'Dodaj obiekt')}
         </Button>
       </div>
     </form>
