@@ -1,11 +1,22 @@
 const Sidebar = ({ activePage, onNavigate }) => {
+  const userRole = localStorage.getItem('role');
+  
   const menuItems = [
     { id: 'dashboard', label: 'Dashboard', icon: '📊' },
-    { id: 'obiekty', label: 'Obiekty', icon: '🏢' },
+    { id: 'obiekty', label: 'Obiekty', icon: '🏢', roleRequired: 'owner' },
+    { id: 'rent_assignment', label: 'Umowy najmu', icon: '📝' },
     { id: 'settings', label: 'Ustawienia', icon: '⚙️' },
   ];
 
   const userName = `${localStorage.getItem('first_name') || ''} ${localStorage.getItem('last_name') || ''}`.trim();
+
+  // Filter menu items based on user role
+  const visibleMenuItems = menuItems.filter(item => {
+    if (item.roleRequired) {
+      return userRole === item.roleRequired;
+    }
+    return true;
+  });
 
   return (
     <aside className="sidebar">
@@ -15,7 +26,7 @@ const Sidebar = ({ activePage, onNavigate }) => {
       </div>
       
       <nav className="sidebar-nav">
-        {menuItems.map((item) => (
+        {visibleMenuItems.map((item) => (
           <button
             key={item.id}
             className={`nav-item ${activePage === item.id ? 'active' : ''}`}
