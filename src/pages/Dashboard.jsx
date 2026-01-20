@@ -2,6 +2,7 @@ import { useState } from 'react';
 import Sidebar from '../components/layout/Sidebar';
 import Overview from './dashboard/Overview';
 import MyObjects from './dashboard/MyObjects';
+import RentAssignment from './dashboard/RentAssignment';
 import Settings from './dashboard/Settings';
 
 const Dashboard = ({ onLogout, showSnackbar }) => {
@@ -23,6 +24,7 @@ const Dashboard = ({ onLogout, showSnackbar }) => {
         <div className="content-container glass-panel">
           {activePage === 'dashboard' && <Overview />}
           {activePage === 'obiekty' && <MyObjects showSnackbar={showSnackbar} />}
+          {activePage === 'rent_assignment' && <RentAssignment showSnackbar={showSnackbar} />}
           {activePage === 'settings' && <Settings showSnackbar={showSnackbar} />}
         </div>
       </main>

@@ -19,30 +19,22 @@ const ObjectDetails = ({ data, isLoading, onEdit, onDelete }) => {
   };
 
   const DetailItem = ({ label, value }) => (
-    <div className="detail-item" style={{ marginBottom: '1.5rem' }}>
-      <div style={{ fontSize: '0.875rem', color: 'var(--text-muted)', marginBottom: '0.25rem' }}>{label}</div>
-      <div style={{ fontSize: '1rem', color: 'var(--text-main)', fontWeight: 500 }}>{value || '-'}</div>
+    <div className="detail-item">
+      <div className="detail-item-label">{label}</div>
+      <div className="detail-item-value">{value || '-'}</div>
     </div>
   );
 
   return (
     <div className="object-details">
-      <div style={{ marginBottom: '2rem', paddingBottom: '1rem', borderBottom: '1px solid rgba(255,255,255,0.1)' }}>
-        <h2 style={{ fontSize: '1.5rem', fontWeight: 700, margin: '0 0 0.5rem 0' }}>{data.name}</h2>
-        <span style={{ 
-          display: 'inline-block', 
-          padding: '0.25rem 0.75rem', 
-          borderRadius: '20px', 
-          background: 'rgba(99, 102, 241, 0.2)', 
-          color: 'var(--primary-color)',
-          fontSize: '0.875rem',
-          fontWeight: 600
-        }}>
+      <div className="detail-header">
+        <h2 className="detail-title">{data.name}</h2>
+        <span className="status-badge primary">
           {getTypeLabel(data.type_of_building)}
         </span>
       </div>
 
-      <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1rem' }}>
+      <div className="detail-grid">
         <DetailItem label="Kraj" value={data.country} />
         <DetailItem label="Województwo" value={data.voivodeship} />
         <DetailItem label="Miasto" value={data.city} />
@@ -51,31 +43,16 @@ const ObjectDetails = ({ data, isLoading, onEdit, onDelete }) => {
 
       <DetailItem label="Ulica" value={data.street} />
       
-      <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1rem' }}>
+      <div className="detail-grid">
         <DetailItem label="Numer budynku" value={data.house_number} />
         <DetailItem label="Numer lokalu" value={data.apartment_number} />
       </div>
 
-      <div style={{ marginTop: '2rem', display: 'flex', gap: '1rem' }}>
+      <div className="detail-actions">
         <Button variant="outline" onClick={onEdit}>
           Edytuj obiekt
         </Button>
-        <Button 
-            variant="outline" 
-            onClick={onDelete}
-            style={{ 
-                borderColor: 'rgba(239, 68, 68, 0.5)', 
-                color: '#fca5a5' 
-            }}
-            onMouseOver={(e) => {
-                e.currentTarget.style.backgroundColor = 'rgba(239, 68, 68, 0.1)';
-                e.currentTarget.style.borderColor = '#ef4444';
-            }}
-            onMouseOut={(e) => {
-                e.currentTarget.style.backgroundColor = 'transparent';
-                e.currentTarget.style.borderColor = 'rgba(239, 68, 68, 0.5)';
-            }}
-        >
+        <Button variant="destructive" onClick={onDelete}>
           Usuń obiekt
         </Button>
       </div>

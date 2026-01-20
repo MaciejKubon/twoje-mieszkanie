@@ -20,6 +20,7 @@ const Button = ({ children, onClick, type = "button", variant = "primary", class
       case 'primary': return 'btn-primary';
       case 'secondary': return 'btn-secondary';
       case 'outline': return 'btn-outline';
+      case 'destructive': return 'btn-destructive';
       default: return 'btn-primary';
     }
   };
