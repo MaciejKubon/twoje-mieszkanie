@@ -2,6 +2,7 @@ const Sidebar = ({ activePage, onNavigate }) => {
   const menuItems = [
     { id: 'dashboard', label: 'Dashboard', icon: '📊' },
     { id: 'obiekty', label: 'Obiekty', icon: '🏢' },
+    { id: 'settings', label: 'Ustawienia', icon: '⚙️' },
   ];
 
   const userName = `${localStorage.getItem('first_name') || ''} ${localStorage.getItem('last_name') || ''}`.trim();
