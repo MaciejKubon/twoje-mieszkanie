@@ -2,11 +2,13 @@ import { useState, useEffect } from 'react';
 import Button from '../../components/ui/Button';
 import Drawer from '../../components/ui/Drawer';
 import AddObjectForm from '../../components/forms/AddObjectForm';
+import EditObjectForm from '../../components/forms/EditObjectForm';
 import ObjectDetails from '../../components/dashboard/ObjectDetails';
 import ConfirmationModal from '../../components/ui/ConfirmationModal';
 
 const MyObjects = ({ showSnackbar }) => {
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
+  const [isEditDrawerOpen, setIsEditDrawerOpen] = useState(false);
   const [isViewDrawerOpen, setIsViewDrawerOpen] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [isFetching, setIsFetching] = useState(true);
@@ -83,7 +85,7 @@ const MyObjects = ({ showSnackbar }) => {
   const handleEditClick = () => {
     setEditingObject(objectDetails);
     setIsViewDrawerOpen(false);
-    setIsDrawerOpen(true);
+    setIsEditDrawerOpen(true);
   };
 
   const handleDeleteClick = () => {
@@ -123,7 +125,7 @@ const MyObjects = ({ showSnackbar }) => {
     }
   };
 
-  const handleSaveObject = async (formData) => {
+  const handleAddObject = async (formData) => {
     setIsLoading(true);
     setErrors({});
     
@@ -131,12 +133,8 @@ const MyObjects = ({ showSnackbar }) => {
       const token = localStorage.getItem('token');
       const apiUrl = import.meta.env.VITE_API_URL;
       
-      const isEdit = !!editingObject;
-      const url = isEdit ? `${apiUrl}/api/object/${editingObject.id}` : `${apiUrl}/api/object`;
-      const method = isEdit ? 'PUT' : 'POST';
-
-      const response = await fetch(url, {
-        method: method,
+      const response = await fetch(`${apiUrl}/api/object`, {
+        method: 'POST',
         headers: {
           'Content-Type': 'application/json',
           'Authorization': `Bearer ${token}`,
@@ -148,8 +146,50 @@ const MyObjects = ({ showSnackbar }) => {
       const data = await response.json();
       
       if (response.ok) {
-        showSnackbar(data.message || (isEdit ? 'Obiekt został zaktualizowany.' : 'Obiekt został dodany pomyślnie.'), 'success');
+        showSnackbar(data.message || 'Obiekt został dodany pomyślnie.', 'success');
         setIsDrawerOpen(false);
+        fetchObjects(); // Refresh the list
+      } else {
+        if (data.error && typeof data.error === 'object') {
+            setErrors(data.error);
+            showSnackbar(data.message || 'Sprawdź formularz pod kątem błędów.', 'error');
+        } else {
+            showSnackbar(data.message || data.error || 'Błąd podczas dodawania obiektu.', 'error');
+        }
+      }
+    } catch (error) {
+      console.error('Add object error:', error);
+      showSnackbar('Błąd połączenia z serwerem.', 'error');
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  const handleEditObject = async (formData) => {
+    if (!editingObject) return;
+
+    setIsLoading(true);
+    setErrors({});
+    
+    try {
+      const token = localStorage.getItem('token');
+      const apiUrl = import.meta.env.VITE_API_URL;
+      
+      const response = await fetch(`${apiUrl}/api/object/${editingObject.id}`, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${token}`,
+          'Accept': 'application/json',
+        },
+        body: JSON.stringify(formData)
+      });
+      
+      const data = await response.json();
+      
+      if (response.ok) {
+        showSnackbar(data.message || 'Obiekt został zaktualizowany.', 'success');
+        setIsEditDrawerOpen(false);
         setEditingObject(null);
         fetchObjects(); // Refresh the list
       } else {
@@ -157,11 +197,11 @@ const MyObjects = ({ showSnackbar }) => {
             setErrors(data.error);
             showSnackbar(data.message || 'Sprawdź formularz pod kątem błędów.', 'error');
         } else {
-            showSnackbar(data.message || data.error || 'Błąd podczas zapisywania obiektu.', 'error');
+            showSnackbar(data.message || data.error || 'Błąd podczas aktualizacji obiektu.', 'error');
         }
       }
     } catch (error) {
-      console.error('Save object error:', error);
+      console.error('Update object error:', error);
       showSnackbar('Błąd połączenia z serwerem.', 'error');
     } finally {
       setIsLoading(false);
@@ -234,23 +274,38 @@ const MyObjects = ({ showSnackbar }) => {
       )}
 
       {/* Add Object Drawer */}
+      {/* Add Object Drawer */}
       <Drawer 
         isOpen={isDrawerOpen} 
-        onClose={() => {
-            setIsDrawerOpen(false);
-            setEditingObject(null);
-        }} 
-        title={editingObject ? "Edytuj obiekt" : "Dodaj nowy obiekt"}
+        onClose={() => setIsDrawerOpen(false)} 
+        title="Dodaj nowy obiekt"
       >
         <AddObjectForm 
-          onSubmit={handleSaveObject} 
+          onSubmit={handleAddObject} 
+          onCancel={() => setIsDrawerOpen(false)} 
+          isLoading={isLoading}
+          errors={errors}
+        />
+      </Drawer>
+
+      {/* Edit Object Drawer */}
+      <Drawer 
+        isOpen={isEditDrawerOpen} 
+        onClose={() => {
+            setIsEditDrawerOpen(false);
+            setEditingObject(null);
+        }} 
+        title="Edytuj obiekt"
+      >
+        <EditObjectForm 
+          onSubmit={handleEditObject} 
           onCancel={() => {
-            setIsDrawerOpen(false);
+            setIsEditDrawerOpen(false);
             setEditingObject(null);
           }} 
           isLoading={isLoading}
           errors={errors}
-          initialData={editingObject}
+          objectData={editingObject}
         />
       </Drawer>
 
