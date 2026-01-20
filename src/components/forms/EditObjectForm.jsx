@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import Button from '../ui/Button';
 import Input from '../ui/Input';
 
-const AddObjectForm = ({ onSubmit, onCancel, isLoading, errors = {} }) => {
+const EditObjectForm = ({ onSubmit, onCancel, isLoading, errors = {}, objectData }) => {
   const [formData, setFormData] = useState({
     name: '',
     type_of_building: 'apartment',
@@ -14,6 +14,22 @@ const AddObjectForm = ({ onSubmit, onCancel, isLoading, errors = {} }) => {
     house_number: '',
     apartment_number: ''
   });
+
+  useEffect(() => {
+    if (objectData) {
+      setFormData({
+        name: objectData.name || '',
+        type_of_building: objectData.type_of_building || 'apartment',
+        country: objectData.country || '',
+        voivodeship: objectData.voivodeship || '',
+        city: objectData.city || '',
+        zip_code: objectData.zip_code || '',
+        street: objectData.street || '',
+        house_number: String(objectData.house_number || ''),
+        apartment_number: String(objectData.apartment_number || '')
+      });
+    }
+  }, [objectData]);
 
   const handleChange = (e) => {
     const { id, value } = e.target;
@@ -136,11 +152,11 @@ const AddObjectForm = ({ onSubmit, onCancel, isLoading, errors = {} }) => {
           Anuluj
         </Button>
         <Button type="submit" variant="primary" disabled={isLoading}>
-          {isLoading ? 'Dodawanie...' : 'Dodaj obiekt'}
+          {isLoading ? 'Zapisywanie...' : 'Zapisz zmiany'}
         </Button>
       </div>
     </form>
   );
 };
 
-export default AddObjectForm;
+export default EditObjectForm;
