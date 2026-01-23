@@ -28,11 +28,6 @@ const AddFullRentForm = ({ onSubmit, onCancel, isLoading, errors = {} }) => {
           const data = await response.json();
           const list = data.data || [];
           setAssignments(list);
-          
-          
-          // if (list.length > 0) {
-          //    setFormData(prev => ({ ...prev, id_rent_assignemt: list[0].id }));
-          // }
         } else {
           console.error('Failed to fetch rent assignments');
         }

@@ -1,13 +1,13 @@
 :root {
-  --primary-color: #6366f1; /* Indigo 500 */
-  --primary-hover: #4f46e5; /* Indigo 600 */
-  --secondary-color: #EC4899; /* Pink 500 */
-  --bg-color: #0f172a; /* Slate 900 */
-  --text-main: #f8fafc; /* Slate 50 */
-  --text-muted: #94a3b8; /* Slate 400 */
-  --glass-bg: rgba(30, 41, 59, 0.7); /* Slate 800 with opacity */
+  --primary-color: #6366f1;
+  --primary-hover: #4f46e5;
+  --secondary-color: #ec4899;
+  --bg-color: #0f172a;
+  --text-main: #f8fafc;
+  --text-muted: #94a3b8;
+  --glass-bg: rgba(30, 41, 59, 0.7);
   --glass-border: rgba(255, 255, 255, 0.1);
-  --font-family: 'Inter', system-ui, -apple-system, sans-serif;
+  --font-family: "Inter", system-ui, -apple-system, sans-serif;
 }
 
 body {
@@ -17,39 +17,43 @@ body {
   -moz-osx-font-smoothing: grayscale;
   background-color: var(--bg-color);
   color: var(--text-main);
-  background-image: 
+  background-image:
     radial-gradient(at 0% 0%, rgba(99, 102, 241, 0.15) 0px, transparent 50%),
     radial-gradient(at 100% 0%, rgba(236, 72, 153, 0.15) 0px, transparent 50%),
-    radial-gradient(at 100% 100%, rgba(99, 102, 241, 0.15) 0px, transparent 50%),
+    radial-gradient(
+      at 100% 100%,
+      rgba(99, 102, 241, 0.15) 0px,
+      transparent 50%
+    ),
     radial-gradient(at 0% 100%, rgba(236, 72, 153, 0.15) 0px, transparent 50%);
   background-attachment: fixed;
   min-height: 100vh;
 }
 
 code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+  font-family:
+    source-code-pro, Menlo, Monaco, Consolas, "Courier New", monospace;
 }
 
-/* Reset basics */
-*, *::before, *::after {
+*,
+*::before,
+*::after {
   box-sizing: border-box;
 }
 
 .glass-panel {
   background: var(--glass-bg);
   backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px); /* Safari support */
+  -webkit-backdrop-filter: blur(12px);
   border: 1px solid var(--glass-border);
   box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
   border-radius: 16px;
 }
 
-/* Button Component Styles */
 .btn {
   width: 100%;
   padding: 0.75rem 1rem;
-  border-radius: 0.75rem; /* 12px */
+  border-radius: 0.75rem;
   font-weight: 600;
   font-size: 1rem;
   cursor: pointer;
@@ -68,13 +72,21 @@ code {
 }
 
 .btn-primary {
-  background: linear-gradient(135deg, var(--primary-color) 0%, var(--primary-hover) 100%);
+  background: linear-gradient(
+    135deg,
+    var(--primary-color) 0%,
+    var(--primary-hover) 100%
+  );
   color: white;
   box-shadow: 0 4px 15px rgba(99, 102, 241, 0.35);
 }
 
 .btn-primary:hover {
-  background: linear-gradient(135deg, var(--primary-hover) 0%, var(--primary-color) 100%);
+  background: linear-gradient(
+    135deg,
+    var(--primary-hover) 0%,
+    var(--primary-color) 100%
+  );
   box-shadow: 0 6px 20px rgba(99, 102, 241, 0.5);
   transform: translateY(-1px);
 }
@@ -91,7 +103,6 @@ code {
   background: rgba(99, 102, 241, 0.05);
 }
 
-/* Input Component Styles */
 .input-group {
   margin-bottom: 1.5rem;
   position: relative;
@@ -114,7 +125,7 @@ code {
 .input-field {
   width: 100%;
   padding: 0.875rem 1rem;
-  background: rgba(15, 23, 42, 0.6); /* Darker background for input */
+  background: rgba(15, 23, 42, 0.6);
   border: 1px solid rgba(255, 255, 255, 0.1);
   border-radius: 0.75rem;
   color: var(--text-main);
@@ -196,7 +207,7 @@ code {
 
 .form-options {
   display: flex;
-  justify-content: flex-end; /* Align to right */
+  justify-content: flex-end;
   margin-bottom: 1.5rem;
   font-size: 0.875rem;
 }
@@ -222,7 +233,7 @@ code {
 
 .divider::before,
 .divider::after {
-  content: '';
+  content: "";
   flex: 1;
   border-bottom: 1px solid rgba(255, 255, 255, 0.1);
 }
@@ -244,8 +255,6 @@ code {
   }
 }
 
-/* Status Messages */
-/* Status Messages / Snackbar */
 .snackbar {
   position: fixed;
   bottom: 24px;
@@ -257,14 +266,16 @@ code {
   border-radius: 12px;
   font-weight: 500;
   text-align: center;
-  box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.4), 0 8px 10px -6px rgba(0, 0, 0, 0.1);
+  box-shadow:
+    0 10px 25px -5px rgba(0, 0, 0, 0.4),
+    0 8px 10px -6px rgba(0, 0, 0, 0.1);
   opacity: 0;
   transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
   display: flex;
   align-items: center;
   justify-content: center;
   font-size: 0.95rem;
-  border: 1px solid rgba(255, 255, 255, 0.05); /* Subtle border */
+  border: 1px solid rgba(255, 255, 255, 0.05);
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
 }
@@ -275,20 +286,19 @@ code {
 }
 
 .snackbar.error {
-  background: rgba(40, 10, 15, 0.9); /* Darker, richer error bg */
+  background: rgba(40, 10, 15, 0.9);
   color: #fca5a5;
   border-color: rgba(239, 68, 68, 0.3);
   box-shadow: 0 10px 30px -5px rgba(220, 38, 38, 0.25);
 }
 
 .snackbar.success {
-  background: rgba(6, 40, 20, 0.9); /* Darker, richer success bg */
+  background: rgba(6, 40, 20, 0.9);
   color: #86efac;
   border-color: rgba(34, 197, 94, 0.3);
   box-shadow: 0 10px 30px -5px rgba(21, 128, 61, 0.25);
 }
 
-/* Fallback for inline status messages if still used locally */
 .status-message {
   margin-top: 1rem;
   padding: 0.75rem;
@@ -304,13 +314,11 @@ code {
   border: 1px solid rgba(239, 68, 68, 0.2);
 }
 
-/* Dashboard Layout */
 .dashboard-layout {
   display: flex;
   min-height: 100vh;
 }
 
-/* Sidebar Styles */
 .sidebar {
   width: 280px;
   background: rgba(15, 23, 42, 0.95);
@@ -369,7 +377,11 @@ code {
 }
 
 .nav-item.active {
-  background: linear-gradient(90deg, rgba(99, 102, 241, 0.15) 0%, rgba(99, 102, 241, 0.05) 100%);
+  background: linear-gradient(
+    90deg,
+    rgba(99, 102, 241, 0.15) 0%,
+    rgba(99, 102, 241, 0.05) 100%
+  );
   color: var(--primary-color);
   border-left: 3px solid var(--primary-color);
 }
@@ -392,10 +404,9 @@ code {
   border-top: 1px solid var(--glass-border);
 }
 
-/* Dashboard Content */
 .dashboard-content {
   flex: 1;
-  margin-left: 280px; /* Width of sidebar */
+  margin-left: 280px;
   padding: 2rem;
   min-height: 100vh;
 }
@@ -411,8 +422,6 @@ code {
   margin-bottom: 1rem;
 }
 
-
-/* Drawer Styles */
 .drawer-overlay {
   position: fixed;
   top: 0;
@@ -432,7 +441,7 @@ code {
   bottom: 0;
   width: 100%;
   max-width: 450px;
-  background: #1a2333; /* Slightly lighter than main bg */
+  background: #1a2333;
   z-index: 101;
   box-shadow: -8px 0 32px rgba(0, 0, 0, 0.5);
   display: flex;
@@ -497,7 +506,6 @@ code {
   }
 }
 
-/* Adjust scrollbar for drawer */
 .drawer-content::-webkit-scrollbar {
   width: 6px;
 }
@@ -506,7 +514,6 @@ code {
   background: transparent;
 }
 
-/* Modal Styles */
 .modal-overlay {
   position: fixed;
   top: 0;
@@ -528,7 +535,9 @@ code {
   padding: 1.5rem;
   border-radius: 16px;
   animation: scaleUp 0.3s cubic-bezier(0.16, 1, 0.3, 1);
-  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+  box-shadow:
+    0 20px 25px -5px rgba(0, 0, 0, 0.1),
+    0 10px 10px -5px rgba(0, 0, 0, 0.04);
 }
 
 @keyframes scaleUp {
@@ -542,7 +551,6 @@ code {
   }
 }
 
-/* Table Styles */
 .table-container {
   overflow-x: auto;
   margin-top: 1rem;
@@ -567,11 +575,11 @@ code {
 .data-table td {
   padding: 1rem;
   border-bottom: 1px solid rgba(255, 255, 255, 0.05);
-  color: #cbd5e1; /* Slate 300 */
+  color: #cbd5e1;
 }
 
 .data-table tbody tr:hover td {
-  background: rgba(255, 255, 255, 0.05); /* Slightly lighter on hover */
+  background: rgba(255, 255, 255, 0.05);
 }
 
 .clickable-row {
@@ -595,7 +603,6 @@ code {
   border-radius: 3px;
 }
 
-/* Custom Select Styles */
 .custom-select-wrapper {
   position: relative;
 }
@@ -630,7 +637,6 @@ code {
   padding: 10px;
 }
 
-/* Detail Component Styles */
 .detail-header {
   margin-bottom: 2rem;
   padding-bottom: 1rem;
@@ -681,7 +687,6 @@ code {
   margin-bottom: 1rem;
 }
 
-/* Status Badge Styles */
 .status-badge {
   display: inline-block;
   padding: 0.25rem 0.75rem;
@@ -705,14 +710,12 @@ code {
   color: var(--primary-color);
 }
 
-/* Action Buttons Container */
 .detail-actions {
   margin-top: 2rem;
   display: flex;
   gap: 1rem;
 }
 
-/* Destructive Button Variant */
 .btn-destructive {
   background: transparent;
   border: 2px solid rgba(239, 68, 68, 0.5);
@@ -723,4 +726,3 @@ code {
   background: rgba(239, 68, 68, 0.1);
   border-color: #ef4444;
 }
-

@@ -17,7 +17,6 @@ const ChangePasswordForm = ({ onSubmit, isLoading, errors = {} }) => {
       ...prev,
       [id]: value
     }));
-    // Clear local error when typing
     if (inputErrors[id]) {
       setInputErrors(prev => ({ ...prev, [id]: null }));
     }

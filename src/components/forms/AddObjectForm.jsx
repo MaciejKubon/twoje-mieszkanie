@@ -1,25 +1,25 @@
-import { useState, useEffect } from 'react';
-import Button from '../ui/Button';
-import Input from '../ui/Input';
+import { useState, useEffect } from "react";
+import Button from "../ui/Button";
+import Input from "../ui/Input";
 
 const AddObjectForm = ({ onSubmit, onCancel, isLoading, errors = {} }) => {
   const [formData, setFormData] = useState({
-    name: '',
-    type_of_building: 'apartment',
-    country: '',
-    voivodeship: '',
-    city: '',
-    zip_code: '',
-    street: '',
-    house_number: '',
-    apartment_number: ''
+    name: "",
+    type_of_building: "apartment",
+    country: "",
+    voivodeship: "",
+    city: "",
+    zip_code: "",
+    street: "",
+    house_number: "",
+    apartment_number: "",
   });
 
   const handleChange = (e) => {
     const { id, value } = e.target;
-    setFormData(prev => ({
+    setFormData((prev) => ({
       ...prev,
-      [id]: value
+      [id]: value,
     }));
   };
 
@@ -28,7 +28,7 @@ const AddObjectForm = ({ onSubmit, onCancel, isLoading, errors = {} }) => {
     const submissionData = {
       ...formData,
       house_number: String(formData.house_number),
-      apartment_number: String(formData.apartment_number || '')
+      apartment_number: String(formData.apartment_number || ""),
     };
     onSubmit(submissionData);
   };
@@ -46,7 +46,9 @@ const AddObjectForm = ({ onSubmit, onCancel, isLoading, errors = {} }) => {
       />
 
       <div className="input-group">
-        <label htmlFor="type_of_building" className="input-label">Typ budynku</label>
+        <label htmlFor="type_of_building" className="input-label">
+          Typ budynku
+        </label>
         <div className="input-wrapper custom-select-wrapper">
           <select
             id="type_of_building"
@@ -111,7 +113,9 @@ const AddObjectForm = ({ onSubmit, onCancel, isLoading, errors = {} }) => {
         required
       />
 
-      <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1rem' }}>
+      <div
+        style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "1rem" }}
+      >
         <Input
           id="house_number"
           label="Nr budynku"
@@ -131,12 +135,20 @@ const AddObjectForm = ({ onSubmit, onCancel, isLoading, errors = {} }) => {
         />
       </div>
 
-      <div className="form-actions" style={{ marginTop: '2rem', display: 'flex', gap: '1rem' }}>
-        <Button type="button" variant="outline" onClick={onCancel} disabled={isLoading}>
+      <div
+        className="form-actions"
+        style={{ marginTop: "2rem", display: "flex", gap: "1rem" }}
+      >
+        <Button
+          type="button"
+          variant="outline"
+          onClick={onCancel}
+          disabled={isLoading}
+        >
           Anuluj
         </Button>
         <Button type="submit" variant="primary" disabled={isLoading}>
-          {isLoading ? 'Dodawanie...' : 'Dodaj obiekt'}
+          {isLoading ? "Dodawanie..." : "Dodaj obiekt"}
         </Button>
       </div>
     </form>

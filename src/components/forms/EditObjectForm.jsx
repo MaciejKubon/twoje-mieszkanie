@@ -1,41 +1,47 @@
-import { useState, useEffect } from 'react';
-import Button from '../ui/Button';
-import Input from '../ui/Input';
+import { useState, useEffect } from "react";
+import Button from "../ui/Button";
+import Input from "../ui/Input";
 
-const EditObjectForm = ({ onSubmit, onCancel, isLoading, errors = {}, objectData }) => {
+const EditObjectForm = ({
+  onSubmit,
+  onCancel,
+  isLoading,
+  errors = {},
+  objectData,
+}) => {
   const [formData, setFormData] = useState({
-    name: '',
-    type_of_building: 'apartment',
-    country: '',
-    voivodeship: '',
-    city: '',
-    zip_code: '',
-    street: '',
-    house_number: '',
-    apartment_number: ''
+    name: "",
+    type_of_building: "apartment",
+    country: "",
+    voivodeship: "",
+    city: "",
+    zip_code: "",
+    street: "",
+    house_number: "",
+    apartment_number: "",
   });
 
   useEffect(() => {
     if (objectData) {
       setFormData({
-        name: objectData.name || '',
-        type_of_building: objectData.type_of_building || 'apartment',
-        country: objectData.country || '',
-        voivodeship: objectData.voivodeship || '',
-        city: objectData.city || '',
-        zip_code: objectData.zip_code || '',
-        street: objectData.street || '',
-        house_number: String(objectData.house_number || ''),
-        apartment_number: String(objectData.apartment_number || '')
+        name: objectData.name || "",
+        type_of_building: objectData.type_of_building || "apartment",
+        country: objectData.country || "",
+        voivodeship: objectData.voivodeship || "",
+        city: objectData.city || "",
+        zip_code: objectData.zip_code || "",
+        street: objectData.street || "",
+        house_number: String(objectData.house_number || ""),
+        apartment_number: String(objectData.apartment_number || ""),
       });
     }
   }, [objectData]);
 
   const handleChange = (e) => {
     const { id, value } = e.target;
-    setFormData(prev => ({
+    setFormData((prev) => ({
       ...prev,
-      [id]: value
+      [id]: value,
     }));
   };
 
@@ -44,7 +50,7 @@ const EditObjectForm = ({ onSubmit, onCancel, isLoading, errors = {}, objectData
     const submissionData = {
       ...formData,
       house_number: String(formData.house_number),
-      apartment_number: String(formData.apartment_number || '')
+      apartment_number: String(formData.apartment_number || ""),
     };
     onSubmit(submissionData);
   };
@@ -62,7 +68,9 @@ const EditObjectForm = ({ onSubmit, onCancel, isLoading, errors = {}, objectData
       />
 
       <div className="input-group">
-        <label htmlFor="type_of_building" className="input-label">Typ budynku</label>
+        <label htmlFor="type_of_building" className="input-label">
+          Typ budynku
+        </label>
         <div className="input-wrapper custom-select-wrapper">
           <select
             id="type_of_building"
@@ -127,7 +135,9 @@ const EditObjectForm = ({ onSubmit, onCancel, isLoading, errors = {}, objectData
         required
       />
 
-      <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1rem' }}>
+      <div
+        style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "1rem" }}
+      >
         <Input
           id="house_number"
           label="Nr budynku"
@@ -147,12 +157,20 @@ const EditObjectForm = ({ onSubmit, onCancel, isLoading, errors = {}, objectData
         />
       </div>
 
-      <div className="form-actions" style={{ marginTop: '2rem', display: 'flex', gap: '1rem' }}>
-        <Button type="button" variant="outline" onClick={onCancel} disabled={isLoading}>
+      <div
+        className="form-actions"
+        style={{ marginTop: "2rem", display: "flex", gap: "1rem" }}
+      >
+        <Button
+          type="button"
+          variant="outline"
+          onClick={onCancel}
+          disabled={isLoading}
+        >
           Anuluj
         </Button>
         <Button type="submit" variant="primary" disabled={isLoading}>
-          {isLoading ? 'Zapisywanie...' : 'Zapisz zmiany'}
+          {isLoading ? "Zapisywanie..." : "Zapisz zmiany"}
         </Button>
       </div>
     </form>

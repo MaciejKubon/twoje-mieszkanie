@@ -1,19 +1,39 @@
-import Button from '../ui/Button';
+import Button from "../ui/Button";
 
 const ObjectDetails = ({ data, isLoading, onEdit, onDelete }) => {
   if (isLoading) {
-    return <div style={{ textAlign: 'center', padding: '2rem', color: 'var(--text-muted)' }}>Ładowanie szczegółów...</div>;
+    return (
+      <div
+        style={{
+          textAlign: "center",
+          padding: "2rem",
+          color: "var(--text-muted)",
+        }}
+      >
+        Ładowanie szczegółów...
+      </div>
+    );
   }
 
   if (!data) {
-    return <div style={{ textAlign: 'center', padding: '2rem', color: 'var(--text-muted)' }}>Brak danych obiektu.</div>;
+    return (
+      <div
+        style={{
+          textAlign: "center",
+          padding: "2rem",
+          color: "var(--text-muted)",
+        }}
+      >
+        Brak danych obiektu.
+      </div>
+    );
   }
 
   const getTypeLabel = (type) => {
     const types = {
-      'apartment': 'Mieszkanie',
-      'house': 'Dom',
-      'room': 'Pokój'
+      apartment: "Mieszkanie",
+      house: "Dom",
+      room: "Pokój",
     };
     return types[type] || type;
   };
@@ -21,7 +41,7 @@ const ObjectDetails = ({ data, isLoading, onEdit, onDelete }) => {
   const DetailItem = ({ label, value }) => (
     <div className="detail-item">
       <div className="detail-item-label">{label}</div>
-      <div className="detail-item-value">{value || '-'}</div>
+      <div className="detail-item-value">{value || "-"}</div>
     </div>
   );
 
@@ -42,7 +62,7 @@ const ObjectDetails = ({ data, isLoading, onEdit, onDelete }) => {
       </div>
 
       <DetailItem label="Ulica" value={data.street} />
-      
+
       <div className="detail-grid">
         <DetailItem label="Numer budynku" value={data.house_number} />
         <DetailItem label="Numer lokalu" value={data.apartment_number} />

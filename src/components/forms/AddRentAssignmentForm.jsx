@@ -1,13 +1,18 @@
-import { useState, useEffect } from 'react';
-import Button from '../ui/Button';
-import Input from '../ui/Input';
+import { useState, useEffect } from "react";
+import Button from "../ui/Button";
+import Input from "../ui/Input";
 
-const AddRentAssignmentForm = ({ onSubmit, onCancel, isLoading, errors = {} }) => {
+const AddRentAssignmentForm = ({
+  onSubmit,
+  onCancel,
+  isLoading,
+  errors = {},
+}) => {
   const [formData, setFormData] = useState({
-    rent_email: '',
-    id_object: '',
-    start_date: '',
-    end_date: ''
+    rent_email: "",
+    id_object: "",
+    start_date: "",
+    end_date: "",
   });
   const [objects, setObjects] = useState([]);
   const [objectsLoading, setObjectsLoading] = useState(true);
@@ -15,30 +20,31 @@ const AddRentAssignmentForm = ({ onSubmit, onCancel, isLoading, errors = {} }) =
   useEffect(() => {
     const fetchObjects = async () => {
       try {
-        const token = localStorage.getItem('token');
+        const token = localStorage.getItem("token");
         const apiUrl = import.meta.env.VITE_API_URL;
-        
+
         const response = await fetch(`${apiUrl}/api/object`, {
           headers: {
-            'Authorization': `Bearer ${token}`,
-            'Accept': 'application/json',
-          }
+            Authorization: `Bearer ${token}`,
+            Accept: "application/json",
+          },
         });
-        
+
         if (response.ok) {
           const data = await response.json();
           // Similar handling to MyObjects.jsx
-          const objectsList = data.objects || (Array.isArray(data) ? data : (data.data || []));
+          const objectsList =
+            data.objects || (Array.isArray(data) ? data : data.data || []);
           setObjects(objectsList);
           // Set default selected object if available
           if (objectsList.length > 0) {
-            setFormData(prev => ({ ...prev, id_object: objectsList[0].id }));
+            setFormData((prev) => ({ ...prev, id_object: objectsList[0].id }));
           }
         } else {
-          console.error('Failed to fetch objects');
+          console.error("Failed to fetch objects");
         }
       } catch (error) {
-        console.error('Error fetching objects:', error);
+        console.error("Error fetching objects:", error);
       } finally {
         setObjectsLoading(false);
       }
@@ -49,17 +55,17 @@ const AddRentAssignmentForm = ({ onSubmit, onCancel, isLoading, errors = {} }) =
 
   const handleChange = (e) => {
     const { id, value } = e.target;
-    setFormData(prev => ({
+    setFormData((prev) => ({
       ...prev,
-      [id]: value
+      [id]: value,
     }));
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
     onSubmit({
-        ...formData,
-        id_object: Number(formData.id_object)
+      ...formData,
+      id_object: Number(formData.id_object),
     });
   };
 
@@ -77,7 +83,9 @@ const AddRentAssignmentForm = ({ onSubmit, onCancel, isLoading, errors = {} }) =
       />
 
       <div className="input-group">
-        <label htmlFor="id_object" className="input-label">Wybierz obiekt</label>
+        <label htmlFor="id_object" className="input-label">
+          Wybierz obiekt
+        </label>
         <div className="input-wrapper custom-select-wrapper">
           <select
             id="id_object"
@@ -90,20 +98,24 @@ const AddRentAssignmentForm = ({ onSubmit, onCancel, isLoading, errors = {} }) =
             {objectsLoading ? (
               <option value="">Ładowanie obiektów...</option>
             ) : objects.length > 0 ? (
-                objects.map(obj => (
-                    <option key={obj.id} value={obj.id}>
-                        {obj.name} ({obj.city}, {obj.street})
-                    </option>
-                ))
+              objects.map((obj) => (
+                <option key={obj.id} value={obj.id}>
+                  {obj.name} ({obj.city}, {obj.street})
+                </option>
+              ))
             ) : (
-                <option value="">Brak dostępnych obiektów</option>
+              <option value="">Brak dostępnych obiektów</option>
             )}
           </select>
         </div>
-        {errors.id_object && <span className="input-error-message">{errors.id_object}</span>}
+        {errors.id_object && (
+          <span className="input-error-message">{errors.id_object}</span>
+        )}
       </div>
 
-      <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1rem' }}>
+      <div
+        style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "1rem" }}
+      >
         <Input
           id="start_date"
           label="Data rozpoczęcia"
@@ -124,12 +136,24 @@ const AddRentAssignmentForm = ({ onSubmit, onCancel, isLoading, errors = {} }) =
         />
       </div>
 
-      <div className="form-actions" style={{ marginTop: '2rem', display: 'flex', gap: '1rem' }}>
-        <Button type="button" variant="outline" onClick={onCancel} disabled={isLoading}>
+      <div
+        className="form-actions"
+        style={{ marginTop: "2rem", display: "flex", gap: "1rem" }}
+      >
+        <Button
+          type="button"
+          variant="outline"
+          onClick={onCancel}
+          disabled={isLoading}
+        >
           Anuluj
         </Button>
-        <Button type="submit" variant="primary" disabled={isLoading || objectsLoading}>
-          {isLoading ? 'Dodawanie...' : 'Dodaj umowę'}
+        <Button
+          type="submit"
+          variant="primary"
+          disabled={isLoading || objectsLoading}
+        >
+          {isLoading ? "Dodawanie..." : "Dodaj umowę"}
         </Button>
       </div>
     </form>
