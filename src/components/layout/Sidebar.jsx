@@ -5,6 +5,7 @@ const Sidebar = ({ activePage, onNavigate }) => {
     { id: 'dashboard', label: 'Dashboard', icon: '📊' },
     { id: 'obiekty', label: 'Obiekty', icon: '🏢', roleRequired: 'owner' },
     { id: 'rent_assignment', label: 'Umowy najmu', icon: '📝' },
+    { id: 'full_rent', label: 'Czynsz', icon: '💰' },
     { id: 'settings', label: 'Ustawienia', icon: '⚙️' },
   ];
 
