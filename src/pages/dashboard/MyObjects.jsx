@@ -6,7 +6,7 @@ import EditObjectForm from '../../components/forms/EditObjectForm';
 import ObjectDetails from '../../components/dashboard/ObjectDetails';
 import ConfirmationModal from '../../components/ui/ConfirmationModal';
 
-const MyObjects = ({ showSnackbar }) => {
+const MyObjects = ({ showSnackbar, navigationParams }) => {
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
   const [isEditDrawerOpen, setIsEditDrawerOpen] = useState(false);
   const [isViewDrawerOpen, setIsViewDrawerOpen] = useState(false);
@@ -18,6 +18,12 @@ const MyObjects = ({ showSnackbar }) => {
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
   const [detailsLoading, setDetailsLoading] = useState(false);
   const [errors, setErrors] = useState({});
+
+  useEffect(() => {
+    if (navigationParams && navigationParams.objectId) {
+      fetchObjectDetails(navigationParams.objectId);
+    }
+  }, [navigationParams]);
 
   const fetchObjects = async () => {
     setIsFetching(true);
